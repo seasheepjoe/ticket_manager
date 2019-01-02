@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <Header :route_name="current_route"/>
+    <Header :route_name="this.$route.name"/>
+    <router-view></router-view>
   </div>
 </template>
 

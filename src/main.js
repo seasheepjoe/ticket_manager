@@ -3,16 +3,9 @@ import App from './App.vue';
 import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
-import VueRouter from 'vue-router';
-import Home from './components/Home.vue';
-
-const routes = [{ path: '/', component: Home, name: 'Home' }];
-const router = new VueRouter({
-  routes
-});
+import router from './router/index';
 
 Vue.use(BootstrapVue);
-Vue.use(VueRouter);
 Vue.config.productionTip = false;
 
 new Vue({
