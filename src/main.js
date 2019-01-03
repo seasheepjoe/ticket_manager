@@ -6,7 +6,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import router from './router/index';
 import fr from './fr.js';
+import Vuex from 'vuex';
 
+Vue.use(Vuex);
 Vue.use(BootstrapVue);
 Vue.use(VueI18n);
 Vue.config.productionTip = false;
