@@ -20,6 +20,7 @@
         ></b-form-input>
       </b-form-group>
       <b-button type="submit" variant="primary">Login</b-button>
+      <div id="invalid-feedback" v-if="error">{{ error_message }}</div>
     </b-form>
   </div>
 </template>
@@ -54,18 +55,19 @@ export default {
               console.log("SUCCESS");
             case "error":
               that.$data.error = true;
-              that.$data.error_message = 0; // add i18n
-              console.log(that.$data.error_message);
+              that.$data.error_message = that.$i18n.t(data.message);
           }
         })
         .catch(function(error) {
           console.log(error);
-        })
-        .then(function() {});
+        });
     }
   }
 };
 </script>
 
 <style>
+#invalid-feedback {
+  color: red;
+}
 </style>
