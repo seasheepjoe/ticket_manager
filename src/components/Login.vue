@@ -52,7 +52,8 @@ export default {
           let data = response.data;
           switch (data.status) {
             case "success":
-              console.log("SUCCESS");
+              that.$store.dispatch("setApiToken", data.user.apiToken);
+              that.$store.dispatch("setUser", data.user);
             case "error":
               that.$data.error = true;
               that.$data.error_message = that.$i18n.t(data.message);
