@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import api from "../config/ApiConfig";
 
 export default {
   name: "Register",
@@ -77,7 +77,7 @@ export default {
   methods: {
     registerUser() {
       let that = this;
-      axios
+      api
         .post("http://api.ticketmanager.com/register", {
           firstname: this.$data.register.firstname,
           lastname: this.$data.register.lastname,
