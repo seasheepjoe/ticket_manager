@@ -1,7 +1,10 @@
 <template>
   <b-navbar toggleable type="light" variant="light">
     <b-navbar-toggle target="nav_text_collapse"></b-navbar-toggle>
-    <b-navbar-brand>{{ route_name }}</b-navbar-brand>
+    <b-navbar-brand>
+      {{ route_name }}
+      <span :v-if="username !== null">{{ username }}</span>
+    </b-navbar-brand>
     <b-collapse is-nav id="nav_text_collapse">
       <b-navbar-nav>
         <b-nav-item>
@@ -9,6 +12,9 @@
         </b-nav-item>
         <b-nav-item>
           <router-link to="/login/">Login</router-link>
+        </b-nav-item>
+        <b-nav-item>
+          <router-link to="/register/">Register</router-link>
         </b-nav-item>
       </b-navbar-nav>
     </b-collapse>
@@ -19,7 +25,8 @@
 export default {
   name: "Header",
   props: {
-    route_name: String
+    route_name: String,
+    username: String
   }
 };
 </script>

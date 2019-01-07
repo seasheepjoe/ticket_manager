@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header :route_name="this.$route.name"/>
+    <Header :route_name="this.$route.name" :username="username"/>
     <router-view></router-view>
   </div>
 </template>
@@ -15,7 +15,8 @@ export default {
   },
   data() {
     return {
-      current_route: this.$route.name
+      current_route: this.$route.name,
+      username: localStorage.getItem("username") || null
     };
   }
 };

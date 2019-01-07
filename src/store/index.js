@@ -6,7 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     API_TOKEN: localStorage.getItem('apiToken') || null,
-    USER_DATA: localStorage.getItem('user') || null
+    USERNAME: localStorage.getItem('username') || null
   },
   mutations: {
     setApiToken(state, apiToken) {
@@ -14,8 +14,8 @@ export default new Vuex.Store({
       localStorage.setItem('apiToken', apiToken);
     },
     setUser(state, user) {
-      state.USER_DATA = user;
-      localStorage.setItem('user', user);
+      state.USERNAME = user;
+      localStorage.setItem('username', user.fullname);
     }
   },
   actions: {
