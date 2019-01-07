@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import api from "../config/ApiConfig";
 
 export default {
   name: "Login",
@@ -43,7 +43,7 @@ export default {
   methods: {
     loginUser(ev) {
       let that = this;
-      axios
+      api
         .post("http://api.ticketmanager.com/login", {
           email: this.$data.login.email,
           password: this.$data.login.password

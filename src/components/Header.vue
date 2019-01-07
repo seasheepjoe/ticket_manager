@@ -6,15 +6,9 @@
       <span :v-if="username !== null">{{ username }}</span>
     </b-navbar-brand>
     <b-collapse is-nav id="nav_text_collapse">
-      <b-navbar-nav>
+      <b-navbar-nav :key="index" v-for="(item, index) in routes">
         <b-nav-item>
-          <router-link to="/">Home</router-link>
-        </b-nav-item>
-        <b-nav-item>
-          <router-link to="/login/">Login</router-link>
-        </b-nav-item>
-        <b-nav-item>
-          <router-link to="/register/">Register</router-link>
+          <router-link :to="item.path">{{ item.name }}</router-link>
         </b-nav-item>
       </b-navbar-nav>
     </b-collapse>
@@ -27,6 +21,11 @@ export default {
   props: {
     route_name: String,
     username: String
+  },
+  data() {
+    return {
+      routes: this.$router.options.routes
+    };
   }
 };
 </script>
