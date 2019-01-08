@@ -13,28 +13,28 @@
 
 <script>
 export default {
-  name: "Ticket",
+  name: 'Ticket',
   props: {
     id: Number,
     title: String,
     author: String,
     date: Object,
-    status: String
+    status: String,
   },
   methods: {
     seeTicket(id) {
       this.$router.push(`tickets/${id}`);
-    }
+    },
   },
   filters: {
     format(date) {
-      let formatted = new Date(date).toLocaleDateString("en-EN", {
-        hour: "numeric",
-        minute: "numeric",
-        second: "numeric"
+      const formatted = new Date(date).toLocaleDateString('en-EN', {
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
       });
       return formatted;
-    }
-  }
+    },
+  },
 };
 </script>

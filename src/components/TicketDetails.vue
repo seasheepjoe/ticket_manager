@@ -2,7 +2,7 @@
   <b-container>
     <div class="ticket">
       <div class="contributors" :key="index" v-for="(item, index) in ticket.contributors">
-        <div id="contributor">{{ item.fullname }}</div>
+        <Contributor :fullname="item.fullname" :ticketId="ticket.id" :contributorId="item.id"/>
       </div>
     </div>
     <div class="messages-list" :key="index" v-for="(item, index) in messages">
@@ -12,48 +12,33 @@
 </template>
 
 <script>
-import api from "../config/ApiConfig";
-import Message from "./Message.vue";
+import api from '../config/ApiConfig';
+import Message from './Message.vue';
+import Contributor from './Contributor.vue';
 
 export default {
   mounted() {
-    let id = this.$route.params.id;
-    api.get(`http://api.ticketmanager.com/tickets/get/${id}`).then(response => {
-      let ticket = response.data.ticket;
-      let messages = response.data.messages;
+    const { id } = this.$route.params;
+    api.get(`http://api.ticketmanager.com/tickets/get/${id}`).then((response) => {
+      const { ticket } = response.data;
+      const { messages } = response.data;
       this.$data.ticket = ticket;
       this.$data.messages = messages;
     });
   },
-  name: "TicketDetails",
+  name: 'TicketDetails',
   components: {
-    Message
+    Message,
+    Contributor,
   },
   data() {
     return {
       ticket: {},
-      messages: []
+      messages: [],
     };
-  }
+  },
 };
 </script>
 
-<style>
-#content {
-  margin: 10px;
-}
-
-#small {
-  font-size: 12px;
-  color: grey;
-  margin: 10px;
-}
-
-#contributor {
-  margin: 5px 0;
-  padding: 10px;
-  border: 1px solid black;
-  width: fit-content;
-  font-size: 15px;
-}
+<style scoped>
 </style>

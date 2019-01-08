@@ -57,50 +57,54 @@
 </template>
 
 <script>
-import api from "../config/ApiConfig";
+import api from '../config/ApiConfig';
 
 export default {
-  name: "Register",
+  name: 'Register',
   data() {
     return {
       register: {
-        firstname: "",
-        lastname: "",
-        email: "",
-        password: "",
-        passwordCheck: ""
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+        passwordCheck: '',
       },
       error: false,
-      error_message: ""
+      error_message: '',
     };
   },
   methods: {
     registerUser() {
-      let that = this;
+      const that = this;
       api
-        .post("http://api.ticketmanager.com/register", {
+        .post('http://api.ticketmanager.com/register', {
           firstname: this.$data.register.firstname,
           lastname: this.$data.register.lastname,
           email: this.$data.register.email,
           password: this.$data.register.password,
-          password_check: this.$data.register.passwordCheck
+          password_check: this.$data.register.passwordCheck,
         })
-        .then(function(response) {
-          let data = response.data;
+        .then((response) => {
+          const { data } = response;
           switch (data.status) {
-            case "success":
-              that.$store.dispatch("setApiToken", data.user.apiToken);
-              that.$store.dispatch("setUser", data.user);
-            case "error":
+            case 'success':
+              that.$store.dispatch('setApiToken', data.user.apiToken);
+              that.$store.dispatch('setUser', data.user);
+              break;
+            case 'error':
               that.$data.error = true;
               that.$data.error_message = that.$i18n.t(data.message);
+              break;
+            default:
+              break;
           }
         })
-        .catch(function(error) {
+        .catch((error) => {
           console.log(error);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

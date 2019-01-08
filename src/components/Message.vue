@@ -9,21 +9,33 @@
 
 <script>
 export default {
-  name: "Message",
+  name: 'Message',
   props: {
     author: String,
     content: String,
-    date: String
+    date: String,
   },
   filters: {
     format(date) {
-      let formatted = new Date(date).toLocaleDateString("en-EN", {
-        hour: "numeric",
-        minute: "numeric",
-        second: "numeric"
+      const formatted = new Date(date).toLocaleDateString('en-EN', {
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
       });
       return formatted;
-    }
-  }
+    },
+  },
 };
 </script>
+
+<style scoped>
+#content {
+  margin: 10px;
+}
+
+#small {
+  font-size: 12px;
+  color: grey;
+  margin: 10px;
+}
+</style>

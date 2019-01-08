@@ -6,19 +6,19 @@
 </template>
 
 <script>
-import Header from "./components/Header.vue";
+import Header from './components/Header.vue';
 
 export default {
-  name: "app",
+  name: 'app',
   components: {
-    Header
+    Header,
   },
   data() {
     return {
       current_route: this.$route.name,
-      username: localStorage.getItem("username") || null
+      username: localStorage.getItem('username') || null,
     };
-  }
+  },
 };
 </script>
 

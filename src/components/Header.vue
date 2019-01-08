@@ -17,24 +17,22 @@
 </template>
 
 <script>
-import api from "../config/ApiConfig";
-
 export default {
-  name: "Header",
+  name: 'Header',
   props: {
     route_name: String,
-    username: String
+    username: String,
   },
   data() {
     return {
-      routes: this.$router.options.routes
+      routes: this.$router.options.routes,
     };
   },
   methods: {
     logout() {
       localStorage.clear();
-    }
-  }
+    },
+  },
 };
 </script>
 

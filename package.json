@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "bootstrap": "^4.2.1",
     "bootstrap-vue": "^2.0.0-rc.11",
     "vue": "^2.5.21",
     "vue-i18n": "^8.7.0",
@@ -19,6 +20,7 @@
     "@vue/cli-plugin-babel": "^3.2.0",
     "@vue/cli-plugin-eslint": "^3.2.0",
     "@vue/cli-service": "^3.2.0",
+    "@vue/eslint-config-airbnb": "^4.0.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
@@ -31,7 +33,7 @@
     },
     "extends": [
       "plugin:vue/essential",
-      "eslint:recommended"
+      "@vue/airbnb"
     ],
     "rules": {},
     "parserOptions": {
