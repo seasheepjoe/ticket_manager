@@ -1,15 +1,17 @@
 <template>
   <div id="app">
     <h2>Home</h2>
-    <div class="ticket-list" :key="index" v-for="(item, index) in tickets">
-      <Ticket
-        :title="item.title"
-        :author="item.author.fullname"
-        :messages="item.messages"
-        :date="item.created_at"
-        :status="item.status"
-      />
-    </div>
+    <b-container>
+      <b-card-group deck class="ticket-list" :key="index" v-for="(item, index) in tickets">
+        <Ticket
+          :title="item.title"
+          :author="item.author.fullname"
+          :messages="item.messages"
+          :date="item.created_at"
+          :status="item.status"
+        />
+      </b-card-group>
+    </b-container>
   </div>
 </template>
 
@@ -52,4 +54,11 @@ export default {
 </script>
 
 <style>
+.ticket-list {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
 </style>
