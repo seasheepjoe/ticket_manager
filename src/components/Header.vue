@@ -11,11 +11,14 @@
           <router-link :to="item.path">{{ item.name }}</router-link>
         </b-nav-item>
       </b-navbar-nav>
+      <b-nav-item @click="logout">Logout</b-nav-item>
     </b-collapse>
   </b-navbar>
 </template>
 
 <script>
+import api from "../config/ApiConfig";
+
 export default {
   name: "Header",
   props: {
@@ -26,6 +29,11 @@ export default {
     return {
       routes: this.$router.options.routes
     };
+  },
+  methods: {
+    logout() {
+      localStorage.clear();
+    }
   }
 };
 </script>
