@@ -9,6 +9,7 @@
           :messages="item.messages"
           :date="item.created_at"
           :status="item.status"
+          :id="item.id"
         />
       </b-card-group>
     </b-container>

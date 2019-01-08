@@ -7,7 +7,7 @@
     :title="title"
   >
     <p class="card-text"></p>
-    <b-button variant="primary" @click="seeTicket">See</b-button>
+    <b-button variant="primary" @click="seeTicket(id)">See</b-button>
   </b-card>
 </template>
 
@@ -15,14 +15,15 @@
 export default {
   name: "Ticket",
   props: {
+    id: Number,
     title: String,
     author: String,
     date: Object,
     status: String
   },
   methods: {
-    seeTicket() {
-      this.$router.push("Login");
+    seeTicket(id) {
+      this.$router.push(`tickets/${id}`);
     }
   },
   filters: {
