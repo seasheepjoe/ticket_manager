@@ -6,17 +6,14 @@
       </div>
     </div>
     <div class="messages-list" :key="index" v-for="(item, index) in messages">
-      <b-list-group-item>
-        <b-row id="small">{{ item.author.fullname }}</b-row>
-        <b-row id="content">{{ item.content }}</b-row>
-        <b-row id="small">{{ item.created_at.date | format }}</b-row>
-      </b-list-group-item>
+      <Message :content="item.content" :date="item.created_at.date" :author="item.author.fullname"/>
     </div>
   </b-container>
 </template>
 
 <script>
 import api from "../config/ApiConfig";
+import Message from "./Message.vue";
 
 export default {
   mounted() {
@@ -29,21 +26,14 @@ export default {
     });
   },
   name: "TicketDetails",
+  components: {
+    Message
+  },
   data() {
     return {
       ticket: {},
       messages: []
     };
-  },
-  filters: {
-    format(date) {
-      let formatted = new Date(date).toLocaleDateString("en-EN", {
-        hour: "numeric",
-        minute: "numeric",
-        second: "numeric"
-      });
-      return formatted;
-    }
   }
 };
 </script>
