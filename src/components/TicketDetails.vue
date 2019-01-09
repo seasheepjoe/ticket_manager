@@ -1,5 +1,5 @@
 <template>
-  <b-container id="container">
+  <b-container id="container" v-if="loaded">
     <div class="ticket">
       <h1>{{ ticket.title }}</h1>
       <h3>{{ ticket.created_at.date | format }}</h3>
@@ -14,7 +14,7 @@
         required
         placeholder="Search users"
       ></b-form-input>
-      <div :key="index" v-for="(item, index) in filterUsers">{{ item.fullname }}</div>
+      <div :key="index" v-for="(item, index) in users">{{ item.fullname }}</div>
     </div>
     <div class="no-message" v-if="messages.length === 0">No messages in this ticket</div>
     <div class="messages-list" :key="index" v-for="(item, index) in messages">
@@ -41,13 +41,14 @@ import Message from "./Message.vue";
 import Contributor from "./Contributor.vue";
 
 export default {
-  mounted() {
+  created() {
     const { id } = this.$route.params;
     api.get(`http://api.ticketmanager.com/tickets/get/${id}`).then(response => {
       const { ticket } = response.data;
       const { messages } = response.data;
       this.$data.ticket = ticket;
       this.$data.messages = messages;
+      this.loaded = true;
     });
   },
   name: "TicketDetails",
@@ -63,7 +64,8 @@ export default {
         content: ""
       },
       users: [],
-      search: ""
+      search: "",
+      loaded: false
     };
   },
   methods: {
