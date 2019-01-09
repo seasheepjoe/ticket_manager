@@ -54,6 +54,7 @@ export default {
             case 'success':
               that.$store.dispatch('setApiToken', data.user.apiToken);
               that.$store.dispatch('setUser', data.user);
+              that.$router.push('/');
               break;
             case 'error':
               that.$data.error = true;
