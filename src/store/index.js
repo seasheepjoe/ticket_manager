@@ -9,7 +9,7 @@ export default new Vuex.Store({
   state: {
     API_TOKEN: localStorage.getItem('apiToken') || null,
     USERNAME: localStorage.getItem('username') || null,
-    IS_ADMIN: localStorage.getItem('isAdmin') || false
+    IS_ADMIN: null
   },
   mutations: {
     setApiToken(state, apiToken) {
@@ -20,7 +20,6 @@ export default new Vuex.Store({
       state.USERNAME = user;
       state.IS_ADMIN = user.is_admin;
       localStorage.setItem('username', user.fullname);
-      localStorage.setItem('isAdmin', user.is_admin);
     }
   },
   actions: {

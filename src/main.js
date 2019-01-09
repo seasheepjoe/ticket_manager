@@ -15,12 +15,12 @@ Vue.config.productionTip = false;
 const i18n = new VueI18n({
   locale: 'fr',
   fallbackLocale: 'fr',
-  messages: fr,
+  messages: fr
 });
 
 new Vue({
   router,
   i18n,
   store,
-  render: h => h(App),
+  render: h => h(App)
 }).$mount('#app');

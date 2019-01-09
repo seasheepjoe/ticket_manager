@@ -4,14 +4,17 @@
       <h1>{{ ticket.title }}</h1>
       <h3>{{ ticket.created_at.date | format }}</h3>
       <h5>{{ ticket.author.fullname }}</h5>
-      <div
-        :v-if="isAdmin"
-        class="contributors"
-        :key="index"
-        v-for="(item, index) in ticket.contributors"
-      >
+      <div :key="index" v-for="(item, index) in ticket.contributors">
         <Contributor :fullname="item.fullname" :ticketId="ticket.id" :contributorId="item.id"/>
       </div>
+      <b-form-input
+        id="search-input"
+        type="text"
+        v-model="search"
+        required
+        placeholder="Search users"
+      ></b-form-input>
+      <div :key="index" v-for="(item, index) in filterUsers">{{ item.fullname }}</div>
     </div>
     <div class="no-message" v-if="messages.length === 0">No messages in this ticket</div>
     <div class="messages-list" :key="index" v-for="(item, index) in messages">
@@ -56,10 +59,11 @@ export default {
     return {
       ticket: {},
       messages: [],
-      isAdmin: this.$store.state.IS_ADMIN,
       newMessage: {
         content: ""
-      }
+      },
+      users: [],
+      search: ""
     };
   },
   methods: {
@@ -88,6 +92,13 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    }
+  },
+  computed: {
+    filterUsers() {
+      return this.users.filter(user =>
+        user.title.toLowerCase().includes(this.search.toLowerCase())
+      );
     }
   },
   filters: {
