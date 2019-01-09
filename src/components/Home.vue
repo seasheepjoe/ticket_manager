@@ -18,44 +18,44 @@
 </template>
 
 <script>
-import api from '../config/ApiConfig';
-import Ticket from './Ticket.vue';
+import api from "../config/ApiConfig";
+import Ticket from "./Ticket.vue";
 
 export default {
   mounted() {
     if (this.$store.state.API_TOKEN) this.getTickets();
   },
-  name: 'Home',
+  name: "Home",
   components: {
-    Ticket,
+    Ticket
   },
   data() {
     return {
-      tickets: [],
+      tickets: []
     };
   },
   methods: {
     getTickets() {
       const that = this;
       api
-        .get('http://api.ticketmanager.com/tickets')
-        .then((response) => {
+        .get("http://api.ticketmanager.com/tickets")
+        .then(response => {
           const { data } = response;
           switch (data.status) {
-            case 'success':
+            case "success":
               that.$data.tickets = data.tickets;
               break;
-            case 'error':
+            case "error":
               break;
             default:
               break;
           }
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
