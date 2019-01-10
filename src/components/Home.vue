@@ -1,10 +1,12 @@
 <template>
   <div id="app">
     <b-container>
-      <h3 v-if="tickets.length === 0">No tickets.</h3>
+      <h3 v-if="tickets.length === 0 && $store.state.API_TOKEN !== null">No tickets.</h3>
+      <h3 v-if="$store.state.API_TOKEN === null">You need to login to see your tickets.</h3>
       <b-card-group deck class="ticket-list">
         <Ticket
-          :key="index" v-for="(item, index) in tickets"
+          :key="index"
+          v-for="(item, index) in tickets"
           :title="item.title"
           :author="item.author.fullname"
           :messages="item.messages"
