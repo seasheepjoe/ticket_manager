@@ -2,10 +2,11 @@
   <b-list-group-item @blur="stopEditing">
     <b-row id="small">{{ author }}</b-row>
     <b-row v-if="!editing" id="content">{{ content }}</b-row>
-    <b-form-textarea wrap="soft" v-if="editing" id="content" type="text" v-model="content" required></b-form-textarea wrap="soft">
+    <b-form-textarea wrap="soft" v-if="editing" id="content" type="text" v-model="new_content" required></b-form-textarea wrap="soft">
     <b-row id="small">{{ date | format }}</b-row>
     <span id="delete" v-if="$store.state.IS_ADMIN" @click="deleteMessage">&times;</span>
     <span id="edit" v-if="$store.state.IS_ADMIN" @click="editMessage">EDIT</span>
+    <b-button @click="editMessageContent" type="submit" variant="primary">Post</b-button>
   </b-list-group-item>
 </template>
 
@@ -58,6 +59,35 @@ export default {
     },
     editMessage() {
       this.editing = true;
+    },
+    editMessageContent() {
+      const that = this;
+      const ticket_id = this.ticket_id;
+      const message_id = this.message_id;
+      api
+        .post("http://api.ticketmanager.com/tickets/messages/edit", {
+          ticket_id,
+          message_id,
+          message_content: that.new_content
+        })
+        .then(response => {
+          const { data } = response;
+          switch (data.status) {
+            case "success":
+              that.editing = false;
+              that.content = data.content;
+              that.$router.go();
+              break;
+            case "error":
+              that.editing = false;
+              break;
+            default:
+              break;
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     stopEditing() {
       this.editing = false;
