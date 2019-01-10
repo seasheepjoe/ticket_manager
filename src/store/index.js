@@ -8,8 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     API_TOKEN: localStorage.getItem('apiToken') || null,
-    USERNAME: localStorage.getItem('username') || null,
-    IS_ADMIN: null
+    USERNAME: localStorage.getItem('username') || null
   },
   mutations: {
     setApiToken(state, apiToken) {
@@ -18,13 +17,14 @@ export default new Vuex.Store({
     },
     setUser(state, user) {
       state.USERNAME = user;
-      state.IS_ADMIN = user.is_admin;
+      Vue.set(state, 'IS_ADMIN', user.is_admin);
       localStorage.setItem('username', user.fullname);
     },
     logout(state) {
       (state.USERNAME = null),
         (state.API_TOKEN = null),
-        localStorage.removeItem('apiToken');
+        Vue.delete(state, 'IS_ADMIN');
+      localStorage.removeItem('apiToken');
       localStorage.removeItem('username');
     }
   },

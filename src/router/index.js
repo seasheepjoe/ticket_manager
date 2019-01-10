@@ -14,27 +14,27 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      component: Home,
+      component: Home
     },
     {
       path: '/login/',
       name: 'Login',
-      component: Login,
+      component: Login
     },
     {
       path: '/register/',
       name: 'Register',
-      component: Register,
+      component: Register
     },
     {
       path: '/tickets/:id/',
       name: 'TicketDetails',
-      component: TicketDetails,
+      component: TicketDetails
     },
     {
       path: '/new/',
       name: 'New Ticket',
-      component: NewTicket,
-    },
-  ],
+      component: NewTicket
+    }
+  ]
 });

@@ -6,32 +6,45 @@
 </template>
 
 <script>
-import api from '@/config/ApiConfig';
+import api from "@/config/ApiConfig";
 
 export default {
-  name: 'Contributor',
+  name: "Contributor",
   props: {
     fullname: String,
     contributorId: Number,
     ticketId: Number,
+    onContributorRemoved: Function
   },
   methods: {
     removeContributor() {
-      const contributorId = this.ticketId;
-      const ticketId = this.contributorId;
+      const contributorId = this.contributorId;
+      const ticketId = this.ticketId;
+      const that = this;
       api
-        .post('http://api.ticketmanager.com/tickets/contributors/remove', {
-          ticketId,
-          contributorId,
+        .post("http://api.ticketmanager.com/tickets/contributors/remove", {
+          ticket_id: ticketId,
+          contributor_id: contributorId
         })
-        .then((response) => {
-          console.log(response);
+        .then(response => {
+          const { data } = response;
+          switch (data.status) {
+            case "success":
+              that.onContributorRemoved(contributorId);
+              break;
+            case "error":
+              that.$data.error = true;
+              that.$data.error_message = that.$i18n.t(data.message);
+              break;
+            default:
+              break;
+          }
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 

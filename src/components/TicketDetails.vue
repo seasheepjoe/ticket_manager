@@ -16,8 +16,13 @@
       <h1 id="ticket-info">{{ ticket.title }}</h1>
       <h3 id="ticket-info">{{ ticket.created_at.date | format }}</h3>
       <h6 id="ticket-info">{{ ticket.author.fullname }}</h6>
-      <div :key="index" v-for="(item, index) in ticket.contributors">
-        <Contributor :fullname="item.fullname" :ticketId="ticket.id" :contributorId="item.id"/>
+      <div :key="index" v-for="(item, index) in ticket.contributors" v-if="$store.state.IS_ADMIN">
+        <Contributor
+          :on-contributor-removed="removeContributor"
+          :fullname="item.fullname"
+          :ticketId="ticket.id"
+          :contributorId="item.id"
+        />
       </div>
       <div :key="index" v-for="(item, index) in users">{{ item.fullname }}</div>
       <div class="no-message" v-if="messages.length === 0">No messages in this ticket</div>
@@ -49,9 +54,6 @@ import Contributor from "./Contributor.vue";
 
 export default {
   created() {
-    setTimeout(() => {
-      this.searchUsers();
-    }, 1000);
     const { id } = this.$route.params;
     api.get(`http://api.ticketmanager.com/tickets/get/${id}`).then(response => {
       const { ticket } = response.data;
@@ -107,6 +109,15 @@ export default {
     },
     searchUsers() {
       console.log(this.searchQuery);
+    },
+    removeContributor(id) {
+      let data = this.ticket.contributors;
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].id == id) {
+          data.splice(i, 1);
+          break;
+        }
+      }
     }
   },
   filters: {
