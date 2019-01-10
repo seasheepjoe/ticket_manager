@@ -26,37 +26,42 @@
 </template>
 
 <script>
-import api from '../config/ApiConfig';
+import api from "../config/ApiConfig";
 
 export default {
-  name: 'Login',
+  name: "Login",
   data() {
     return {
       login: {
-        email: '',
-        password: '',
+        email: "",
+        password: ""
       },
       error: false,
-      error_message: '',
+      error_message: ""
     };
+  },
+  beforeCreate() {
+    if (this.$store.state.API_TOKEN !== null) {
+      this.$router.push("/");
+    }
   },
   methods: {
     loginUser() {
       const that = this;
       api
-        .post('http://api.ticketmanager.com/login', {
+        .post("http://api.ticketmanager.com/login", {
           email: this.$data.login.email,
-          password: this.$data.login.password,
+          password: this.$data.login.password
         })
-        .then((response) => {
+        .then(response => {
           const { data } = response;
           switch (data.status) {
-            case 'success':
-              that.$store.dispatch('setApiToken', data.user.apiToken);
-              that.$store.dispatch('setUser', data.user);
-              that.$router.push('/');
+            case "success":
+              that.$store.dispatch("setApiToken", data.user.apiToken);
+              that.$store.dispatch("setUser", data.user);
+              that.$router.push("/");
               break;
-            case 'error':
+            case "error":
               that.$data.error = true;
               that.$data.error_message = that.$i18n.t(data.message);
               break;
@@ -64,11 +69,11 @@ export default {
               break;
           }
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
