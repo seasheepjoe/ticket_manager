@@ -34,7 +34,7 @@
         />
       </div>
     </div>
-    <div class="users">
+    <div class="users" v-if="$store.state.IS_ADMIN">
       <b-form-input
         id="search-input"
         type="text"
@@ -162,7 +162,7 @@ export default {
 .new-message {
   border: 1px solid black;
   padding: 15px;
-  width: 100%;
+  width: 80%;
   right: 0;
   margin: 20px;
 }
