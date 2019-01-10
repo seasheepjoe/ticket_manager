@@ -16,7 +16,7 @@ export default new Vuex.Store({
       localStorage.setItem('apiToken', apiToken);
     },
     setUser(state, user) {
-      state.USERNAME = user;
+      state.USERNAME = user.fullname;
       Vue.set(state, 'IS_ADMIN', user.is_admin);
       localStorage.setItem('username', user.fullname);
     },
