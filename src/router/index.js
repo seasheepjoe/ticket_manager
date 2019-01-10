@@ -60,6 +60,9 @@ router.beforeEach((to, from, next) => {
             next();
             break;
           case 'error':
+            if (data.message === "need_login") {
+              store.dispatch('logout');
+            }
             next({ name: 'Login' });
             break;
           default:
