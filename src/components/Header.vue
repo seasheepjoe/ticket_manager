@@ -6,33 +6,45 @@
       <span :v-if="username !== null">{{ username }}</span>
     </b-navbar-brand>
     <b-collapse is-nav id="nav_text_collapse">
-      <b-navbar-nav :key="index" v-for="(item, index) in routes">
+      <b-navbar-nav>
         <b-nav-item>
-          <router-link :to="item.path">{{ item.name }}</router-link>
+          <router-link to="/">Home</router-link>
+        </b-nav-item>
+        <b-nav-item v-if="$store.state.API_TOKEN === null">
+          <router-link to="/login/">Login</router-link>
+        </b-nav-item>
+        <b-nav-item v-if="$store.state.API_TOKEN === null">
+          <router-link to="/register/">Register</router-link>
+        </b-nav-item>
+        <b-nav-item v-if="$store.state.API_TOKEN !== null">
+          <router-link to="/new/">New ticket</router-link>
+        </b-nav-item>
+        <b-nav-item @click="logout" v-if="$store.state.API_TOKEN !== null">
+          <router-link to="/">Logout</router-link>
         </b-nav-item>
       </b-navbar-nav>
-      <b-nav-item @click="logout">Logout</b-nav-item>
     </b-collapse>
   </b-navbar>
 </template>
 
 <script>
 export default {
-  name: 'Header',
+  name: "Header",
   props: {
     route_name: String,
-    username: String,
+    username: String
   },
   data() {
     return {
-      routes: this.$router.options.routes,
+      routes: this.$router.options.routes
     };
   },
   methods: {
     logout() {
-      localStorage.clear();
-    },
-  },
+      this.$store.dispatch("logout");
+      this.$router.push("/");
+    }
+  }
 };
 </script>
 
