@@ -20,6 +20,12 @@ export default new Vuex.Store({
       state.USERNAME = user;
       state.IS_ADMIN = user.is_admin;
       localStorage.setItem('username', user.fullname);
+    },
+    logout(state) {
+      (state.USERNAME = null),
+        (state.API_TOKEN = null),
+        localStorage.removeItem('apiToken');
+      localStorage.removeItem('username');
     }
   },
   actions: {
@@ -28,6 +34,9 @@ export default new Vuex.Store({
     },
     setUser(context, user) {
       context.commit('setUser', user);
+    },
+    logout(context) {
+      context.commit('logout');
     }
   }
 });
