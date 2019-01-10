@@ -144,7 +144,7 @@ export default {
           const { data } = response;
           switch (data.status) {
             case "success":
-              that.messages.unshift(data.message);
+              that.messages.push(data.message);
               that.newMessage.content = "";
               break;
             case "error":
