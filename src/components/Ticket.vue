@@ -1,5 +1,5 @@
 <template>
-  <b-card
+  <b-card id="ticket"
     :header="author"
     header-tag="header"
     :footer="date.date | format"
@@ -78,5 +78,10 @@ span {
   font-size: 50px;
   right: 2.5%;
   top: 17.5%;
+}
+
+#ticket {
+  margin: 10px 0;
+  width: 75%;
 }
 </style>

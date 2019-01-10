@@ -2,8 +2,9 @@
   <div id="app">
     <b-container>
       <h3 v-if="tickets.length === 0">No tickets.</h3>
-      <b-card-group deck class="ticket-list" :key="index" v-for="(item, index) in tickets">
+      <b-card-group deck class="ticket-list">
         <Ticket
+          :key="index" v-for="(item, index) in tickets"
           :title="item.title"
           :author="item.author.fullname"
           :messages="item.messages"
@@ -70,10 +71,9 @@ export default {
 
 <style>
 .ticket-list {
-  margin: 20px 0;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 </style>

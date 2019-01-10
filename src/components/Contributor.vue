@@ -51,7 +51,7 @@ export default {
 <style scoped>
 #contributor {
   margin: 5px 0;
-  padding: 10px;
+  padding: 5px;
   border: 1px solid black;
   width: fit-content;
   font-size: 15px;

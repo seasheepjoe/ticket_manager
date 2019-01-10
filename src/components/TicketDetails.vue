@@ -2,13 +2,15 @@
   <div id="container" v-if="loaded">
     <b-form @submit.prevent="createMessage" class="new-message">
       <b-form-group id="group-content" label="Message :" label-for="content-input">
-        <b-form-input
+        <b-form-textarea
           id="content-input"
           type="text"
           v-model="newMessage.content"
+          cols="10"
+          rows="10"
           required
-          placeholder="your content"
-        ></b-form-input>
+          placeholder="Your message ..."
+        ></b-form-textarea>
       </b-form-group>
       <b-button type="submit" variant="primary">Post</b-button>
     </b-form>
@@ -16,8 +18,11 @@
       <h1 id="ticket-info">{{ ticket.title }}</h1>
       <h3 id="ticket-info">{{ ticket.created_at.date | format }}</h3>
       <h6 id="ticket-info">{{ ticket.author.fullname }}</h6>
-      <div :key="index" v-for="(item, index) in ticket.contributors" v-if="$store.state.IS_ADMIN">
+      <div class="contributors-list">
         <Contributor
+          :key="index"
+          v-for="(item, index) in ticket.contributors"
+          v-if="$store.state.IS_ADMIN"
           :on-contributor-removed="onContributorRemoved"
           :fullname="item.fullname"
           :ticketId="ticket.id"
@@ -25,8 +30,9 @@
         />
       </div>
       <div class="no-message" v-if="messages.length === 0">No messages in this ticket</div>
-      <div class="messages-list" :key="index" v-for="(item, index) in messages">
+      <div class="messages-list">
         <Message
+          :key="index" v-for="(item, index) in messages"
           :content="item.content"
           :message_id="item.id"
           :ticket_id="ticket.id"
@@ -92,7 +98,7 @@ export default {
       },
       users: [],
       searchQuery: "",
-      loaded: false,
+      loaded: false
     };
   },
   methods: {
@@ -259,4 +265,14 @@ export default {
   transform: scale(1.01);
   transition: all 0.1s;
 }
+
+.contributors-list {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 </style>
