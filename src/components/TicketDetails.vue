@@ -18,7 +18,7 @@
       <h6 id="ticket-info">{{ ticket.author.fullname }}</h6>
       <div :key="index" v-for="(item, index) in ticket.contributors" v-if="$store.state.IS_ADMIN">
         <Contributor
-          :on-contributor-removed="removeContributor"
+          :on-contributor-removed="onContributorRemoved"
           :fullname="item.fullname"
           :ticketId="ticket.id"
           :contributorId="item.id"
@@ -29,8 +29,11 @@
       <div class="messages-list" :key="index" v-for="(item, index) in messages">
         <Message
           :content="item.content"
+          :message_id="item.id"
+          :ticket_id="ticket.id"
           :date="item.created_at.date"
           :author="item.author.fullname"
+          :on-message-deleted="onMessageDeleted"
         />
       </div>
     </div>
@@ -110,8 +113,17 @@ export default {
     searchUsers() {
       console.log(this.searchQuery);
     },
-    removeContributor(id) {
+    onContributorRemoved(id) {
       let data = this.ticket.contributors;
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].id == id) {
+          data.splice(i, 1);
+          break;
+        }
+      }
+    },
+    onMessageDeleted(id) {
+      let data = this.messages;
       for (var i = 0; i < data.length; i++) {
         if (data[i].id == id) {
           data.splice(i, 1);
