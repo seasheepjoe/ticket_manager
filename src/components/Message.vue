@@ -1,9 +1,11 @@
 <template>
-  <b-list-group-item>
+  <b-list-group-item @blur="stopEditing">
     <b-row id="small">{{ author }}</b-row>
-    <b-row id="content">{{ content }}</b-row>
+    <b-row v-if="!editing" id="content">{{ content }}</b-row>
+    <b-form-textarea wrap="soft" v-if="editing" id="content" type="text" v-model="content" required></b-form-textarea wrap="soft">
     <b-row id="small">{{ date | format }}</b-row>
-    <span v-if="$store.state.IS_ADMIN" @click="deleteMessage">&times;</span>
+    <span id="delete" v-if="$store.state.IS_ADMIN" @click="deleteMessage">&times;</span>
+    <span id="edit" v-if="$store.state.IS_ADMIN" @click="editMessage">EDIT</span>
   </b-list-group-item>
 </template>
 
@@ -20,6 +22,12 @@ export default {
     onMessageDeleted: Function,
     message_id: Number,
     ticket_id: Number
+  },
+  data() {
+    return {
+      editing: false,
+      new_content: ""
+    };
   },
   methods: {
     deleteMessage() {
@@ -47,6 +55,12 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },
+    editMessage() {
+      this.editing = true;
+    },
+    stopEditing() {
+      this.editing = false;
     }
   },
   filters: {
@@ -73,16 +87,29 @@ export default {
   margin: 10px;
 }
 
-span:hover {
+#delete:hover {
   color: red;
   transition: all 0.2s;
-  cursor: pointer;
 }
 
 span {
   position: absolute;
   font-size: 50px;
   right: 2.5%;
-  top: 17.5%;
+  cursor: pointer;
+}
+
+#delete {
+  top: 0;
+}
+
+#edit {
+  top: 5%;
+  font-size: 12.5px;
+}
+
+#edit:hover {
+  color: blue;
+  transition: all 0.2s;
 }
 </style>
