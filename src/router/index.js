@@ -44,7 +44,11 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.name !== 'Login' || to.name !== 'Register') {
+  if (
+    to.name !== 'Login' &&
+    to.name !== 'Register' &&
+    store.state.API_TOKEN !== null
+  ) {
     api
       .get('http://api.ticketmanager.com/auth/check')
       .then(response => {
