@@ -6,8 +6,8 @@
           id="content-input"
           type="text"
           v-model="newMessage.content"
-          cols="10"
-          rows="10"
+          cols="8"
+          rows="8"
           required
           placeholder="Your message ..."
         ></b-form-textarea>
