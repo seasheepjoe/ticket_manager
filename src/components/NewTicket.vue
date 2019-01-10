@@ -51,7 +51,7 @@ export default {
           switch (data.status) {
             case "success":
               console.log(data);
-              that.$router.push("/");
+              that.$router.push(`/tickets/${data.ticket.id}`);
               break;
             case "error":
               that.$data.error = true;
