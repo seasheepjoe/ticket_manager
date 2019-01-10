@@ -3,7 +3,7 @@
     <b-row id="small">{{ author }}</b-row>
     <b-row id="content">{{ content }}</b-row>
     <b-row id="small">{{ date | format }}</b-row>
-    <span @click="deleteMessage">&times;</span>
+    <span v-if="$store.state.IS_ADMIN" @click="deleteMessage">&times;</span>
   </b-list-group-item>
 </template>
 
@@ -12,14 +12,14 @@
 import api from "../config/ApiConfig";
 
 export default {
-  name: 'Message',
+  name: "Message",
   props: {
     author: String,
     content: String,
     date: String,
     onMessageDeleted: Function,
     message_id: Number,
-    ticket_id: Number,
+    ticket_id: Number
   },
   methods: {
     deleteMessage() {
@@ -51,14 +51,14 @@ export default {
   },
   filters: {
     format(date) {
-      const formatted = new Date(date).toLocaleDateString('en-EN', {
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
+      const formatted = new Date(date).toLocaleDateString("en-EN", {
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric"
       });
       return formatted;
-    },
-  },
+    }
+  }
 };
 </script>
 

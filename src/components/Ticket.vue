@@ -8,7 +8,7 @@
   >
     <p class="card-text"></p>
     <b-button variant="primary" @click="showTicket(id)">See</b-button>
-    <span @click="deleteTicket">&times;</span>
+    <span v-if="$store.state.IS_ADMIN" @click="deleteTicket">&times;</span>
   </b-card>
 </template>
 
@@ -16,7 +16,7 @@
 import api from "../config/ApiConfig";
 
 export default {
-  name: 'Ticket',
+  name: "Ticket",
   props: {
     id: Number,
     title: String,
@@ -55,14 +55,14 @@ export default {
   },
   filters: {
     format(date) {
-      const formatted = new Date(date).toLocaleDateString('en-EN', {
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
+      const formatted = new Date(date).toLocaleDateString("en-EN", {
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric"
       });
       return formatted;
-    },
-  },
+    }
+  }
 };
 </script>
 
