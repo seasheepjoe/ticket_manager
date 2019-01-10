@@ -1,5 +1,5 @@
 <template>
-  <b-navbar toggleable type="light" variant="light">
+  <b-navbar id="header" toggleable type="light" variant="light">
     <b-navbar-toggle target="nav_text_collapse"></b-navbar-toggle>
     <b-navbar-brand>
       {{ route_name }}
@@ -50,4 +50,8 @@ export default {
 </script>
 
 <style scoped>
+#header {
+  position: sticky;
+  top: 1px;
+}
 </style>
