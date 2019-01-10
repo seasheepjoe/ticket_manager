@@ -24,7 +24,6 @@
           :contributorId="item.id"
         />
       </div>
-      <div :key="index" v-for="(item, index) in users">{{ item.fullname }}</div>
       <div class="no-message" v-if="messages.length === 0">No messages in this ticket</div>
       <div class="messages-list" :key="index" v-for="(item, index) in messages">
         <Message
@@ -42,10 +41,22 @@
         id="search-input"
         type="text"
         v-model="searchQuery"
-        @keydown="searchUsers"
         required
+        v-on:input="debounceInput"
         placeholder="Search users"
+        autocomplete="off"
       ></b-form-input>
+
+      <p v-if="users.length === 0 && searchQuery !== ''">No results.</p>
+      <div class="users-results">
+        <p
+          @click="addContributor(item.id)"
+          v-if="searchQuery !== ''"
+          :key="index"
+          v-for="(item, index) in users"
+          id="user"
+        >{{ item.fullname }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -54,6 +65,7 @@
 import api from "../config/ApiConfig";
 import Message from "./Message.vue";
 import Contributor from "./Contributor.vue";
+import _ from "lodash";
 
 export default {
   created() {
@@ -80,10 +92,37 @@ export default {
       },
       users: [],
       searchQuery: "",
-      loaded: false
+      loaded: false,
     };
   },
   methods: {
+    addContributor(id) {
+      const that = this;
+      const ticket_id = this.ticket.id;
+      const contributor_id = id;
+      api
+        .post("http://api.ticketmanager.com/tickets/contributors/add", {
+          ticket_id,
+          contributor_id
+        })
+        .then(response => {
+          const { data } = response;
+          switch (data.status) {
+            case "success":
+              that.ticket.contributors.push(data.contributor);
+              break;
+            case "error":
+              that.$data.error = true;
+              that.$data.error_message = that.$i18n.t(data.message);
+              break;
+            default:
+              break;
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
     createMessage() {
       const that = this;
       api
@@ -110,9 +149,6 @@ export default {
           console.log(error);
         });
     },
-    searchUsers() {
-      console.log(this.searchQuery);
-    },
     onContributorRemoved(id) {
       let data = this.ticket.contributors;
       for (var i = 0; i < data.length; i++) {
@@ -130,6 +166,33 @@ export default {
           break;
         }
       }
+    },
+    debounceInput: _.debounce(function() {
+      this.getUsers(this.searchQuery);
+    }, 500),
+    getUsers(query) {
+      const that = this;
+      api
+        .post("http://api.ticketmanager.com/users/search", {
+          fullname: query
+        })
+        .then(response => {
+          const { data } = response;
+          switch (data.status) {
+            case "success":
+              that.users = data.users;
+              break;
+            case "error":
+              that.$data.error = true;
+              that.$data.error_message = that.$i18n.t(data.message);
+              break;
+            default:
+              break;
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   },
   filters: {
@@ -177,5 +240,23 @@ export default {
   width: 80%;
   right: 0;
   margin: 20px;
+}
+
+.users-results {
+  margin: 10px 0;
+  padding: 5px 0;
+}
+
+#user {
+  border: 1px solid #4e00ff;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+#user:hover {
+  transform: scale(1.01);
+  transition: all 0.1s;
 }
 </style>
