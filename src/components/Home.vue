@@ -10,6 +10,7 @@
           :date="item.created_at"
           :status="item.status"
           :id="item.id"
+          :on-ticket-deleted="deleteTicket"
         />
       </b-card-group>
     </b-container>
@@ -53,6 +54,15 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },
+    deleteTicket(id) {
+      let data = this.tickets;
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].id == id) {
+          data.splice(i, 1);
+          break;
+        }
+      }
     }
   }
 };
