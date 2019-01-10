@@ -15,10 +15,8 @@ api.interceptors.request.use(
 );
 
 api.interceptors.response.use(
-  (config) => {
-    const token = store.state.API_TOKEN;
-    if (token) config.headers['X-AUTH-TOKEN'] = token;
-    return config;
+  (response) => {
+    return response;
   },
   error => Promise.reject(error),
 );
