@@ -32,7 +32,8 @@
       <div class="no-message" v-if="messages.length === 0">No messages in this ticket</div>
       <div class="messages-list">
         <Message
-          :key="index" v-for="(item, index) in messages"
+          :key="index"
+          v-for="(item, index) in messages"
           :content="item.content"
           :message_id="item.id"
           :ticket_id="ticket.id"
@@ -43,6 +44,7 @@
       </div>
     </div>
     <div class="users" v-if="$store.state.IS_ADMIN">
+      <p id="error" v-if="error">{{ error_message }}</p>
       <b-form-input
         id="search-input"
         type="text"
@@ -98,7 +100,9 @@ export default {
       },
       users: [],
       searchQuery: "",
-      loaded: false
+      loaded: false,
+      error: false,
+      error_message: ""
     };
   },
   methods: {
@@ -225,6 +229,10 @@ export default {
   align-items: center;
 }
 
+#error {
+  color: red;
+}
+
 #ticket-info {
   margin: 15px 0;
 }
@@ -274,5 +282,4 @@ export default {
   align-items: center;
   flex-wrap: wrap;
 }
-
 </style>
