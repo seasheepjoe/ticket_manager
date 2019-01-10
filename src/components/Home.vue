@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <h2>Home</h2>
     <b-container>
       <h3 v-if="tickets.length === 0">No tickets.</h3>
       <b-card-group deck class="ticket-list" :key="index" v-for="(item, index) in tickets">
